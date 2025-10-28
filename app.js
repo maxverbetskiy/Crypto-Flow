@@ -1149,19 +1149,6 @@ applyEdgeLabelSpacing() {
     }
 
 
-
-                    // Создаем транзакцию между кошельками
-    edges.push({
-        id: `dual-integration-${index}`,
-        source: tx.input,
-        target: tx.output,
-        label: `${this.formatAmount(tx.amount, tx.currency)} ${tx.currency}\n\n${this.formatDateShort(tx.date)}`,
-        amount: tx.amount,
-        currency: tx.currency,
-        date: tx.date,
-        classes: ''
-    });
-
     return;
 
             }
@@ -1296,11 +1283,13 @@ allTransactions.forEach((tx, index) => {
         return;
     }
 
+    // Обрабатываем только обычные транзакции и placement-dual-integration
+    // Пропускаем только multi-input транзакции
     const inputStr = String(tx.input || '').trim();
     const hasMultipleInputs = inputStr.includes('\n');
     
-    // Multi-input и placement-dual-integration уже обработаны выше, пропускаем их
-    if (hasMultipleInputs || tx.stage === 'placement-dual-integration') {
+    if (hasMultipleInputs) {
+        // Multi-input транзакции обрабатываются отдельно выше
         return;
     }
 
@@ -1317,6 +1306,7 @@ allTransactions.forEach((tx, index) => {
         index: index
     });
 });
+
 
 
 // Создаём рёбра из сгруппированных данных
