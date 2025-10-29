@@ -1768,7 +1768,11 @@ async exportAsPNG() {
             log('Final canvas size: ' + canvas.width + 'x' + canvas.height);
 
             // Скачиваем
-            const fileName = 'crypto-flow-' + (this.currentExchange || 'graph') + '-' + Date.now() + '.png';
+            const excelFileName = this.uploadedFiles.excel?.name || '';
+            const caseIdFromFile = excelFileName.match(/[/_]\s*(\d+)/)?.[1] || 'export';
+            const cleanedExchange = (this.currentExchange || 'graph').replace(/\//g, '_');
+            const fileName = caseIdFromFile + '_' + cleanedExchange + '.png';
+
             
             canvas.toBlob(function(blob) {
                 const url = URL.createObjectURL(blob);
@@ -1928,7 +1932,11 @@ async exportAsPNG() {
             const blob = new Blob([finalSvgContent], { type: 'image/svg+xml;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            const fileName = 'crypto-flow-' + (this.currentExchange || 'graph') + '-' + Date.now() + '.svg';
+            const excelFileName = this.uploadedFiles.excel?.name || '';
+            const caseIdFromFile = excelFileName.match(/[/_]\s*(\d+)/)?.[1] || 'export';
+            const cleanedExchange = (this.currentExchange || 'graph').replace(/\//g, '_');
+            const fileName = caseIdFromFile + '_' + cleanedExchange + '.svg';
+
             link.download = fileName;
             link.href = url;
             link.click();
