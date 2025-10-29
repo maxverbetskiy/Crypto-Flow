@@ -1,7 +1,7 @@
 // Crypto Transaction Flow Analyzer v2.11.0 - Multi-Input + Swap Filter
 // Author: AI Assistant | Date: October 2025
 
-const DEBUG = true;
+const DEBUG = false;
 
 function log(message, data = null) {
     if (DEBUG) {
